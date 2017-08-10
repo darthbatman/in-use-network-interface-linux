@@ -1,0 +1,9 @@
+#!/bin/bash
+
+interface=$(route | grep -v "Destination" | grep -v "Kernel" | grep -v "default" | awk -F' ' '{ print $8 }')
+
+echo DEVICE: "$interface"
+echo MAC ADDRESS: $(ifconfig "$interface" | awk -F'(HWaddr)' ' { print $2 } ')
+echo IP ADDRESS: $(ifconfig "$interface" | awk -F'(inet addr:)|( Bcast)' ' { print $2 } ')
+echo SUBNET MASK: $(route | grep -v "Destination" | grep -v "Kernel" | grep -v "default" | awk -F' ' '{ print $3 }')
+echo DNS: $(route | grep -v "Destination" | grep -v "Kernel" | grep -v "default" | awk -F' ' '{ print $1 }')
